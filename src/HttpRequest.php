@@ -5,7 +5,7 @@ namespace Http;
 /**
  * @template TValue
  */
-class HttpRequest implements Request
+readonly class HttpRequest implements Request
 {
     /**
      * @param array<string,TValue>  $getParameters
@@ -16,12 +16,12 @@ class HttpRequest implements Request
      * @param string $inputStream
      */
     public function __construct(
-        public readonly array $getParameters,
-        public readonly array $postParameters,
-        public readonly array $cookies,
-        public readonly array $files,
-        public readonly array $server,
-        public readonly string $inputStream = ''
+        public array  $getParameters,
+        public array  $postParameters,
+        public array  $cookies,
+        public array  $files,
+        public array  $server,
+        public string $inputStream = ''
     ) {
     }
 
@@ -31,7 +31,7 @@ class HttpRequest implements Request
      * @param  string $key
      * @param  string $defaultValue (optional)
      */
-    public function getParameter(string $key, $defaultValue = null): string|int|null
+    public function getParameter(string $key, $defaultValue = null): ?string
     {
         if (array_key_exists($key, $this->postParameters)) {
             return $this->postParameters[$key];
@@ -49,9 +49,8 @@ class HttpRequest implements Request
      *
      * @param  string $key
      * @param  string $defaultValue (optional)
-     * @return string
      */
-    public function getQueryParameter(string $key, $defaultValue = null): string|int|null
+    public function getQueryParameter(string $key, $defaultValue = null): ?string
     {
         if (array_key_exists($key, $this->getParameters)) {
             return $this->getParameters[$key];
@@ -82,7 +81,7 @@ class HttpRequest implements Request
      * @param  string $key
      * @param  string $defaultValue (optional)
      */
-    public function getFile(string $key, $defaultValue = null): string|null
+    public function getFile(string $key, $defaultValue = null): ?string
     {
         if (array_key_exists($key, $this->files)) {
             return $this->files[$key];
@@ -97,7 +96,7 @@ class HttpRequest implements Request
      * @param  string $key
      * @param  string $defaultValue (optional)
      */
-    public function getCookie(string $key, $defaultValue = null): string|int|null
+    public function getCookie(string $key, $defaultValue = null): ?string
     {
         if (array_key_exists($key, $this->cookies)) {
             return $this->cookies[$key];

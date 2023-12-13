@@ -4,11 +4,11 @@ namespace Http;
 
 interface Request
 {
-    public function getParameter(string $key, $defaultValue = null): string|int|null;
-    public function getQueryParameter(string $key, $defaultValue = null): string|int|null;
-    public function getBodyParameter(string $key, $defaultValue = null): string|int|null;
-    public function getFile(string $key, $defaultValue = null): string|null;
-    public function getCookie(string $key, $defaultValue = null): string|int|null;
+    public function getParameter(string $key, $defaultValue = null): ?string;
+    public function getQueryParameter(string $key, $defaultValue = null): ?string;
+    public function getBodyParameter(string $key, $defaultValue = null): ?string;
+    public function getFile(string $key, $defaultValue = null): ?string;
+    public function getCookie(string $key, $defaultValue = null): ?string;
     public function getParameters(): array;
     public function getQueryParameters(): array;
     public function getBodyParameters(): array;

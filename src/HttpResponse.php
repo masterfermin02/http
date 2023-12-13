@@ -81,7 +81,7 @@ class HttpResponse implements Response
      * @param  string  $statusText (optional)
      * @return void
      */
-    public function setStatusCode($statusCode, $statusText = null)
+    public function setStatusCode($statusCode, $statusText = null): void
     {
         if ($statusText === null
             && array_key_exists((int) $statusCode, $this->statusTexts)
@@ -97,7 +97,7 @@ class HttpResponse implements Response
      * Returns the HTTP status code
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -109,7 +109,7 @@ class HttpResponse implements Response
      * @param  string $value
      * @return void
      */
-    public function addHeader($name, $value)
+    public function addHeader($name, $value): void
     {
         $this->headers[$name][] = (string) $value;
     }
@@ -123,7 +123,7 @@ class HttpResponse implements Response
      * @param  string $value
      * @return void
      */
-    public function setHeader($name, $value)
+    public function setHeader($name, $value): void
     {
         $this->headers[$name] = [
             (string) $value,
@@ -135,7 +135,7 @@ class HttpResponse implements Response
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         $headers = array_merge(
             $this->getRequestLineHeaders(),
@@ -152,7 +152,7 @@ class HttpResponse implements Response
      * @param  Cookie $cookie
      * @return void
      */
-    public function addCookie(Cookie $cookie)
+    public function addCookie(Cookie $cookie): void
     {
         $this->cookies[$cookie->getName()] = $cookie;
     }
@@ -163,7 +163,7 @@ class HttpResponse implements Response
      * @param  Cookie $cookie
      * @return void
      */
-    public function deleteCookie(Cookie $cookie)
+    public function deleteCookie(Cookie $cookie): void
     {
         $cookie->setValue('');
         $cookie->setMaxAge(-1);
@@ -176,7 +176,7 @@ class HttpResponse implements Response
      * @param  string $content
      * @return void
      */
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->content = (string) $content;
     }
@@ -186,7 +186,7 @@ class HttpResponse implements Response
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -197,13 +197,13 @@ class HttpResponse implements Response
      * @param  string $url
      * @return void
      */
-    public function redirect($url)
+    public function redirect($url): void
     {
         $this->setHeader('Location', $url);
         $this->setStatusCode(301);
     }
 
-    private function getRequestLineHeaders()
+    private function getRequestLineHeaders(): array
     {
         $headers = [];
 
@@ -219,7 +219,7 @@ class HttpResponse implements Response
         return $headers;
     }
 
-    private function getStandardHeaders()
+    private function getStandardHeaders(): array
     {
         $headers = [];
 
@@ -232,7 +232,7 @@ class HttpResponse implements Response
         return $headers;
     }
 
-    private function getCookieHeaders()
+    private function getCookieHeaders(): array
     {
         $headers = [];
 
