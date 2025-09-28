@@ -1,97 +1,97 @@
 <?php
 
-namespace Http\Test\Unit;
+namespace Tests\Unit;
 
 use Http\CookieBuilder;
 use PHPUnit\Framework\TestCase;
 
 class CookieBuilderTest extends TestCase
 {
-    public function testSetDefaultDomain()
+    public function testSetDefaultDomain(): void
     {
         $builder = new CookieBuilder;
         $builder->setDefaultDomain('.example.com');
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; domain=.example.com; path=/; secure; HttpOnly', 
+            'name=value; domain=.example.com; path=/; secure; HttpOnly',
             $cookie->getHeaderString()
         );
     }
 
-    public function testSetDefaultPath()
+    public function testSetDefaultPath(): void
     {
         $builder = new CookieBuilder;
         $builder->setDefaultPath('/test');
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/test; secure; HttpOnly', 
+            'name=value; path=/test; secure; HttpOnly',
             $cookie->getHeaderString()
         );
     }
 
-    public function testSetDefaultSecure()
+    public function testSetDefaultSecure(): void
     {
         $builder = new CookieBuilder;
         $builder->setDefaultSecure(true);
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/; secure; HttpOnly', 
+            'name=value; path=/; secure; HttpOnly',
             $cookie->getHeaderString()
         );
 
         $builder->setDefaultSecure(false);
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/; HttpOnly', 
+            'name=value; path=/; HttpOnly',
             $cookie->getHeaderString()
         );
     }
 
-    public function testSetDefaultHttpOnly()
+    public function testSetDefaultHttpOnly(): void
     {
         $builder = new CookieBuilder;
         $builder->setDefaultHttpOnly(true);
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/; secure; HttpOnly', 
+            'name=value; path=/; secure; HttpOnly',
             $cookie->getHeaderString()
         );
 
         $builder->setDefaultHttpOnly(false);
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/; secure', 
+            'name=value; path=/; secure',
             $cookie->getHeaderString()
         );
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $builder = new CookieBuilder;
 
         $cookie = $builder->build('name', 'value');
-        $this->assertInstanceOf('Http\HttpCookie', $cookie);
+        $this->assertInstanceOf(\Http\HttpCookie::class, $cookie);
 
         $this->assertEquals(
-            'name=value; path=/; secure; HttpOnly', 
+            'name=value; path=/; secure; HttpOnly',
             $cookie->getHeaderString()
         );
     }

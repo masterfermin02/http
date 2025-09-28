@@ -13,7 +13,6 @@ readonly class HttpRequest implements Request
      * @param array<string,TValue>  $cookies
      * @param array<string,TValue>  $files
      * @param array<string,TValue>  $server
-     * @param string $inputStream
      */
     public function __construct(
         public array  $getParameters,
@@ -28,7 +27,6 @@ readonly class HttpRequest implements Request
     /**
      * Returns a parameter value or a default value if none is set.
      *
-     * @param  string $key
      * @param  string $defaultValue (optional)
      */
     public function getParameter(string $key, $defaultValue = null): ?string
@@ -47,7 +45,6 @@ readonly class HttpRequest implements Request
     /**
      * Returns a query parameter value or a default value if none is set.
      *
-     * @param  string $key
      * @param  string $defaultValue (optional)
      */
     public function getQueryParameter(string $key, $defaultValue = null): ?string
@@ -62,9 +59,7 @@ readonly class HttpRequest implements Request
     /**
      * Returns a body parameter value or a default value if none is set.
      *
-     * @param  string $key
      * @param  string $defaultValue (optional)
-     * @return string
      */
     public function getBodyParameter(string $key, $defaultValue = null): string
     {
@@ -78,7 +73,6 @@ readonly class HttpRequest implements Request
     /**
      * Returns a file value or a default value if none is set.
      *
-     * @param  string $key
      * @param  string $defaultValue (optional)
      */
     public function getFile(string $key, $defaultValue = null): ?string
@@ -93,7 +87,6 @@ readonly class HttpRequest implements Request
     /**
      * Returns a cookie value or a default value if none is set.
      *
-     * @param  string $key
      * @param  string $defaultValue (optional)
      */
     public function getCookie(string $key, $defaultValue = null): ?string
@@ -136,10 +129,8 @@ readonly class HttpRequest implements Request
     }
 
     /**
-    * Returns raw values from the read-only stream that allows you to read raw data from the request body.
-    *
-    * @return string
-    */
+     * Returns raw values from the read-only stream that allows you to read raw data from the request body.
+     */
     public function getRawBody(): string
     {
         return $this->inputStream;
@@ -168,7 +159,6 @@ readonly class HttpRequest implements Request
     /**
      * The URI which was given in order to access this page
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getUri(): string
@@ -178,8 +168,6 @@ readonly class HttpRequest implements Request
 
     /**
      * Return just the path
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -190,7 +178,6 @@ readonly class HttpRequest implements Request
      * Which request method was used to access the page;
      * i.e. 'GET', 'HEAD', 'POST', 'PUT'.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getMethod(): string
@@ -201,7 +188,6 @@ readonly class HttpRequest implements Request
     /**
      * Contents of the Accept: header from the current request, if there is one.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getHttpAccept(): string
@@ -213,7 +199,6 @@ readonly class HttpRequest implements Request
      * The address of the page (if any) which referred the user agent to the
      * current page.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getReferer(): string
@@ -224,7 +209,6 @@ readonly class HttpRequest implements Request
     /**
      * Content of the User-Agent header from the request, if there is one.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getUserAgent(): string
@@ -235,7 +219,6 @@ readonly class HttpRequest implements Request
     /**
      * The IP address from which the user is viewing the current page.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getIpAddress(): string
@@ -245,8 +228,6 @@ readonly class HttpRequest implements Request
 
     /**
      * Checks to see whether the current request is using HTTPS.
-     *
-     * @return boolean
      */
     public function isSecure(): bool
     {
@@ -258,7 +239,6 @@ readonly class HttpRequest implements Request
     /**
      * The query string, if any, via which the page was accessed.
      *
-     * @return string
      * @throws MissingRequestMetaVariableException
      */
     public function getQueryString(): string
@@ -269,10 +249,10 @@ readonly class HttpRequest implements Request
     /**
      * @throws MissingRequestMetaVariableException
      */
-    private function getServerVariable($key): string
+    private function getServerVariable(string $key): string
     {
         if (!array_key_exists($key, $this->server)) {
-            throw new MissingRequestMetaVariableException($key);
+            throw new MissingRequestMetaVariableException($key, 0, null);
         }
 
         return $this->server[$key];

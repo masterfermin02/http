@@ -4,32 +4,32 @@ namespace Http;
 
 class CookieBuilder
 {
-    private $defaultDomain;
-    private $defaultPath = '/';
-    private $defaultSecure = true;
-    private $defaultHttpOnly = true;
+    private ?string $defaultDomain = null;
+    private string $defaultPath = '/';
+    private bool $defaultSecure = true;
+    private bool $defaultHttpOnly = true;
 
-    public function setDefaultDomain($domain)
+    public function setDefaultDomain($domain): void
     {
         $this->defaultDomain = (string) $domain;
     }
 
-    public function setDefaultPath($path)
+    public function setDefaultPath($path): void
     {
         $this->defaultPath = (string) $path;
     }
 
-    public function setDefaultSecure($secure)
+    public function setDefaultSecure($secure): void
     {
         $this->defaultSecure = (bool) $secure;
     }
 
-    public function setDefaultHttpOnly($httpOnly)
+    public function setDefaultHttpOnly($httpOnly): void
     {
         $this->defaultHttpOnly = (bool) $httpOnly;
     }
 
-    public function build($name, $value)
+    public function build($name, $value): \Http\HttpCookie
     {
         $cookie = new HttpCookie($name, $value);
         $cookie->setPath($this->defaultPath);

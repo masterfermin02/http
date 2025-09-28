@@ -14,11 +14,22 @@
         "php": ">=8.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "9.5.*"
+        "phpunit/phpunit": "12.3.*",
+        "rector/rector": "^2.1"
     },
     "autoload": {
         "psr-4": {
-            "Http\\": "src/"
+            "Http\\": "src/",
+            "Tests\\": "tests/"
         }
+    },
+    "scripts": {
+      "refactor": "rector",
+      "test:unit": "phpunit",
+      "test:refactor": "rector --dry-run",
+      "test": [
+        "@test:unit",
+        "@test:refactor"
+      ]
     }
 }

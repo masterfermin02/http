@@ -4,14 +4,14 @@ namespace Http;
 
 class HttpResponse implements Response
 {
-    private $version = '1.1';
-    private $statusCode = 200;
-    private $statusText = 'OK';
-    private $headers = [];
-    private $cookies = [];
-    private $content;
+    private string $version = '1.1';
+    private int $statusCode = 200;
+    private string $statusText = 'OK';
+    private array $headers = [];
+    private array $cookies = [];
+    private ?string $content = null;
 
-    private $statusTexts = [
+    private array $statusTexts = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -79,7 +79,6 @@ class HttpResponse implements Response
      *
      * @param  integer $statusCode
      * @param  string  $statusText (optional)
-     * @return void
      */
     public function setStatusCode($statusCode, $statusText = null): void
     {
@@ -95,7 +94,6 @@ class HttpResponse implements Response
 
     /**
      * Returns the HTTP status code
-     * @return int
      */
     public function getStatusCode(): int
     {
@@ -107,7 +105,6 @@ class HttpResponse implements Response
      *
      * @param  string $name
      * @param  string $value
-     * @return void
      */
     public function addHeader($name, $value): void
     {
@@ -121,7 +118,6 @@ class HttpResponse implements Response
      *
      * @param  string $name
      * @param  string $value
-     * @return void
      */
     public function setHeader($name, $value): void
     {
@@ -132,25 +128,18 @@ class HttpResponse implements Response
 
     /**
      * Returns an array with the HTTP headers.
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
-        $headers = array_merge(
+        return array_merge(
             $this->getRequestLineHeaders(),
             $this->getStandardHeaders(),
             $this->getCookieHeaders()
         );
-
-        return $headers;
     }
 
     /**
      * Adds a new cookie.
-     *
-     * @param  Cookie $cookie
-     * @return void
      */
     public function addCookie(Cookie $cookie): void
     {
@@ -159,9 +148,6 @@ class HttpResponse implements Response
 
     /**
      * Deletes a cookie.
-     *
-     * @param  Cookie $cookie
-     * @return void
      */
     public function deleteCookie(Cookie $cookie): void
     {
@@ -174,7 +160,6 @@ class HttpResponse implements Response
      * Sets the body content.
      *
      * @param  string $content
-     * @return void
      */
     public function setContent($content): void
     {
@@ -183,8 +168,6 @@ class HttpResponse implements Response
 
     /**
      * Returns the body content.
-     *
-     * @return string
      */
     public function getContent(): string
     {
@@ -195,7 +178,6 @@ class HttpResponse implements Response
      * Sets the headers for a redirect.
      *
      * @param  string $url
-     * @return void
      */
     public function redirect($url): void
     {

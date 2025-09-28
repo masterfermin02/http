@@ -4,13 +4,13 @@ namespace Http;
 
 class HttpCookie implements Cookie
 {
-    private $name;
-    private $value;
-    private $domain;
-    private $path;
-    private $maxAge;
-    private $secure;
-    private $httpOnly;
+    private readonly string $name;
+    private string $value;
+    private ?string $domain = null;
+    private ?string $path = null;
+    private ?int $maxAge = null;
+    private ?bool $secure = null;
+    private ?bool $httpOnly = null;
 
     public function __construct($name, $value)
     {
@@ -20,10 +20,8 @@ class HttpCookie implements Cookie
 
     /**
      * Returns the cookie name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -32,9 +30,8 @@ class HttpCookie implements Cookie
      * Sets the cookie value.
      *
      * @param  string $value
-     * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = (string) $value;
     }
@@ -43,9 +40,8 @@ class HttpCookie implements Cookie
      * Sets the cookie max age in seconds.
      *
      * @param  integer $seconds
-     * @return void
      */
-    public function setMaxAge($seconds)
+    public function setMaxAge($seconds): void
     {
         $this->maxAge = (int) $seconds;
     }
@@ -54,9 +50,8 @@ class HttpCookie implements Cookie
      * Sets the cookie domain.
      *
      * @param  string $domain
-     * @return void
      */
-    public function setDomain($domain)
+    public function setDomain($domain): void
     {
         $this->domain = (string) $domain;
     }
@@ -65,9 +60,8 @@ class HttpCookie implements Cookie
      * Sets the cookie path.
      *
      * @param  string $path
-     * @return void
      */
-    public function setPath($path)
+    public function setPath($path): void
     {
         $this->path = (string) $path;
     }
@@ -76,9 +70,8 @@ class HttpCookie implements Cookie
      * Sets the cookie secure flag.
      *
      * @param  boolean $secure
-     * @return void
      */
-    public function setSecure($secure)
+    public function setSecure($secure): void
     {
         $this->secure = (bool) $secure;
     }
@@ -87,19 +80,16 @@ class HttpCookie implements Cookie
      * Sets the cookie httpOnly flag.
      *
      * @param  boolean $httpOnly
-     * @return void
      */
-    public function setHttpOnly($httpOnly)
+    public function setHttpOnly($httpOnly): void
     {
         $this->httpOnly = (bool) $httpOnly;
     }
 
     /**
      * Returns the cookie HTTP header string.
-     *
-     * @return string
      */
-    public function getHeaderString()
+    public function getHeaderString(): string
     {
         $parts = [
             $this->name . '=' . rawurlencode($this->value),
@@ -116,14 +106,15 @@ class HttpCookie implements Cookie
         return implode('; ', $filteredParts);
     }
 
-    private function getMaxAgeString()
+    private function getMaxAgeString(): ?string
     {
         if ($this->maxAge !== null) {
             return 'Max-Age='. $this->maxAge;
         }
+        return null;
     }
 
-    private function getExpiresString()
+    private function getExpiresString(): ?string
     {
         if ($this->maxAge !== null) {
             return 'expires=' . gmdate(
@@ -131,33 +122,38 @@ class HttpCookie implements Cookie
                 time() + $this->maxAge
             ) . ' GMT';
         }
+        return null;
     }
 
-    private function getDomainString()
+    private function getDomainString(): ?string
     {
-        if ($this->domain) {
+        if ($this->domain !== null && $this->domain !== '' && $this->domain !== '0') {
             return "domain=$this->domain";
         }
+        return null;
     }
 
-    private function getPathString()
+    private function getPathString(): ?string
     {
-        if ($this->path) {
+        if ($this->path !== null && $this->path !== '' && $this->path !== '0') {
             return "path=$this->path";
         }
+        return null;
     }
 
-    private function getSecureString()
+    private function getSecureString(): ?string
     {
-        if ($this->secure) {
+        if ($this->secure === true) {
             return 'secure';
         }
+        return null;
     }
 
-    private function getHttpOnlyString()
+    private function getHttpOnlyString(): ?string
     {
-        if ($this->httpOnly) {
+        if ($this->httpOnly === true) {
             return 'HttpOnly';
         }
+        return null;
     }
 }

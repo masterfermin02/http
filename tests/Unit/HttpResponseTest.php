@@ -1,13 +1,13 @@
 <?php
 
-namespace Http\Test\Unit;
+namespace Tests\Unit;
 
 use Http\HttpResponse;
 use PHPUnit\Framework\TestCase;
 
 class HttpResponseTest extends TestCase
 {
-    public function testSetStatusCode()
+    public function testSetStatusCode(): void
     {
         $response = new HttpResponse;
 
@@ -25,7 +25,7 @@ class HttpResponseTest extends TestCase
         $this->assertEquals($response->getHeaders()[0], 'HTTP/1.1 555');
     }
 
-    public function testAddHeader()
+    public function testAddHeader(): void
     {
         $response = new HttpResponse;
 
@@ -40,7 +40,7 @@ class HttpResponseTest extends TestCase
 
     }
 
-    public function testSetHeader()
+    public function testSetHeader(): void
     {
         $response = new HttpResponse;
         $response->addHeader('name', 'value');
@@ -49,7 +49,7 @@ class HttpResponseTest extends TestCase
         $this->assertEquals($response->getHeaders()[2], 'name2: value3');
     }
 
-    public function testAddCookie()
+    public function testAddCookie(): void
     {
         $response = new HttpResponse;
 
@@ -60,7 +60,7 @@ class HttpResponseTest extends TestCase
         $this->assertEquals($response->getHeaders()[2], 'Set-Cookie: mock2');
     }
 
-    public function testDeleteCookie()
+    public function testDeleteCookie(): void
     {
         $response = new HttpResponse;
         $response->addCookie(new MockCookie('mock1'));
@@ -68,14 +68,14 @@ class HttpResponseTest extends TestCase
         $this->assertEquals($response->getHeaders()[1], 'Set-Cookie: mock1  -1');
     }
 
-    public function testSetContent()
+    public function testSetContent(): void
     {
         $response = new HttpResponse;
         $response->setContent('test');
         $this->assertEquals($response->getContent(), 'test');
     }
 
-    public function testRedirect()
+    public function testRedirect(): void
     {
         $response = new HttpResponse;
         $response->redirect('http://test.com');
@@ -88,26 +88,26 @@ class HttpResponseTest extends TestCase
 
 class MockCookie implements \Http\Cookie
 {
-    private $name;
-    private $value;
-    private $maxAge;
+    private readonly string $name;
+    private ?string $value = null;
+    private ?int $maxAge = null;
 
     public function __construct($name)
     {
         $this->name = (string) $name;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = (string) $value;
     }
 
-    public function setMaxAge($seconds)
+    public function setMaxAge($seconds): void
     {
         $this->maxAge = (int) $seconds;
     }
@@ -128,7 +128,7 @@ class MockCookie implements \Http\Cookie
     {
     }
 
-    public function getHeaderString()
+    public function getHeaderString(): string
     {
         return trim(implode(' ', [$this->name, $this->value, $this->maxAge]));
     }
