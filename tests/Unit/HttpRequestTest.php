@@ -77,7 +77,7 @@ class HttpRequestTest extends TestCase
         $request = new HttpRequest([], $post, [], [], []);
 
         $this->assertEquals(
-            $request->getBodyParameter('key1'),
+            $request->getBodyParameter('key1', ''),
             $post['key1']
         );
 

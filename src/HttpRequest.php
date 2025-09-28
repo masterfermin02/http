@@ -61,13 +61,13 @@ readonly class HttpRequest implements Request
      *
      * @param  string $defaultValue (optional)
      */
-    public function getBodyParameter(string $key, $defaultValue = null): string
+    public function getBodyParameter(string $key, ?string $defaultValue): string
     {
         if (array_key_exists($key, $this->postParameters)) {
             return $this->postParameters[$key];
         }
 
-        return $defaultValue;
+        return $defaultValue ?? '';
     }
 
     /**
@@ -169,7 +169,7 @@ readonly class HttpRequest implements Request
     /**
      * Return just the path
      */
-    public function getPath(): string
+    public function getPath(): string|false
     {
         return strtok($this->getServerVariable('REQUEST_URI'), '?');
     }

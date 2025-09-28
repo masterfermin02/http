@@ -6,7 +6,7 @@ interface Request
 {
     public function getParameter(string $key, mixed $defaultValue = null): ?string;
     public function getQueryParameter(string $key, mixed $defaultValue = null): ?string;
-    public function getBodyParameter(string $key, mixed $defaultValue = null): ?string;
+    public function getBodyParameter(string $key, ?string $defaultValue): ?string;
     public function getFile(string $key, mixed $defaultValue = null): ?string;
     public function getCookie(string $key, mixed $defaultValue = null): ?string;
 
@@ -37,7 +37,7 @@ interface Request
      */
     public function getFiles(): array;
     public function getUri(): string;
-    public function getPath(): string;
+    public function getPath(): string|false;
     public function getMethod(): string;
     public function getHttpAccept(): string;
     public function getReferer(): string;

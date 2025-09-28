@@ -17,7 +17,7 @@ class HttpResponse implements Response
      * @var array <string, mixed> $cookies
      */
     private array $cookies = [];
-    private ?string $content = null;
+    private string $content = '';
 
     /**
      * Standard HTTP status codes and texts.
@@ -101,7 +101,7 @@ class HttpResponse implements Response
         }
 
         $this->statusCode = $statusCode;
-        $this->statusText = $statusText;
+        $this->statusText = $statusText ?? 'ok';
     }
 
     /**

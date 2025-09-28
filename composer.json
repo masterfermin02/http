@@ -25,7 +25,7 @@
     },
     "scripts": {
       "refactor": "rector",
-      "types": "phpstan analyse src --level=6",
+      "types": "phpstan analyse src --level=8",
       "test:unit": "phpunit",
       "test:refactor": "rector --dry-run",
       "test": [
