@@ -4,16 +4,37 @@ namespace Http;
 
 interface Request
 {
-    public function getParameter(string $key, $defaultValue = null): ?string;
-    public function getQueryParameter(string $key, $defaultValue = null): ?string;
-    public function getBodyParameter(string $key, $defaultValue = null): ?string;
-    public function getFile(string $key, $defaultValue = null): ?string;
-    public function getCookie(string $key, $defaultValue = null): ?string;
+    public function getParameter(string $key, mixed $defaultValue = null): ?string;
+    public function getQueryParameter(string $key, mixed $defaultValue = null): ?string;
+    public function getBodyParameter(string $key, mixed $defaultValue = null): ?string;
+    public function getFile(string $key, mixed $defaultValue = null): ?string;
+    public function getCookie(string $key, mixed $defaultValue = null): ?string;
+
+    /** Returns all parameters as an associative array.
+     * @return array<string, string>
+     */
     public function getParameters(): array;
+
+    /** Returns all query parameters as an associative array.
+     * @return array<string, string>
+     */
     public function getQueryParameters(): array;
+
+    /** Returns all body parameters as an associative array.
+     * @return array<string, string>
+     */
     public function getBodyParameters(): array;
+
     public function getRawBody(): string;
+
+    /** Returns all files as an associative array.
+     * @return array<string, mixed>
+     */
     public function getCookies(): array;
+
+    /** Returns all files as an associative array.
+     * @return array<string, mixed>
+     */
     public function getFiles(): array;
     public function getUri(): string;
     public function getPath(): string;

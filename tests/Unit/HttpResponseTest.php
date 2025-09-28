@@ -11,17 +11,17 @@ class HttpResponseTest extends TestCase
     {
         $response = new HttpResponse;
 
-        $response->setStatusCode('404');
+        $response->setStatusCode(404, 'Not Found');
         $this->assertEquals(
             $response->getHeaders()[0],
             'HTTP/1.1 404 Not Found'
         );
         $this->assertEquals($response->getStatusCode(), 404);
 
-        $response->setStatusCode('555', 'Custom');
+        $response->setStatusCode(555, 'Custom');
         $this->assertEquals($response->getHeaders()[0], 'HTTP/1.1 555 Custom');
 
-        $response->setStatusCode('555');
+        $response->setStatusCode(555, '');
         $this->assertEquals($response->getHeaders()[0], 'HTTP/1.1 555');
     }
 
@@ -112,19 +112,19 @@ class MockCookie implements \Http\Cookie
         $this->maxAge = (int) $seconds;
     }
 
-    public function setDomain($domain)
+    public function setDomain(string $domain): void
     {
     }
 
-    public function setPath($path)
+    public function setPath(string $path): void
     {
     }
 
-    public function setSecure($secure)
+    public function setSecure(bool $secure): void
     {
     }
 
-    public function setHttpOnly($httpOnly)
+    public function setHttpOnly(bool $httpOnly): void
     {
     }
 

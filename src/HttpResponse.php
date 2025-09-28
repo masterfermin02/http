@@ -7,10 +7,23 @@ class HttpResponse implements Response
     private string $version = '1.1';
     private int $statusCode = 200;
     private string $statusText = 'OK';
+
+    /**
+     * @var array <string, string[]> $headers
+     */
     private array $headers = [];
+
+    /**
+     * @var array <string, mixed> $cookies
+     */
     private array $cookies = [];
     private ?string $content = null;
 
+    /**
+     * Standard HTTP status codes and texts.
+     *
+     * @var array<int, string>
+     */
     private array $statusTexts = [
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -77,19 +90,18 @@ class HttpResponse implements Response
     /**
      * Sets the HTTP status code.
      *
-     * @param  integer $statusCode
      * @param  string  $statusText (optional)
      */
-    public function setStatusCode($statusCode, $statusText = null): void
+    public function setStatusCode(int $statusCode, ?string $statusText): void
     {
         if ($statusText === null
-            && array_key_exists((int) $statusCode, $this->statusTexts)
+            && array_key_exists($statusCode, $this->statusTexts)
         ) {
             $statusText = $this->statusTexts[$statusCode];
         }
 
-        $this->statusCode = (int) $statusCode;
-        $this->statusText = (string) $statusText;
+        $this->statusCode = $statusCode;
+        $this->statusText = $statusText;
     }
 
     /**
@@ -182,9 +194,16 @@ class HttpResponse implements Response
     public function redirect($url): void
     {
         $this->setHeader('Location', $url);
-        $this->setStatusCode(301);
+        $this->setStatusCode(301, null);
     }
 
+    /**
+     * Returns the request line header.
+     *
+     * E.g.: "HTTP/1.1 200 OK"
+     *
+     * @return string[]
+     */
     private function getRequestLineHeaders(): array
     {
         $headers = [];
@@ -201,6 +220,11 @@ class HttpResponse implements Response
         return $headers;
     }
 
+    /**
+     * Returns all standard headers.
+     *
+     * @return string[]
+     */
     private function getStandardHeaders(): array
     {
         $headers = [];
@@ -214,6 +238,11 @@ class HttpResponse implements Response
         return $headers;
     }
 
+    /**
+     * Returns all cookie headers.
+     *
+     * @return string[]
+     */
     private function getCookieHeaders(): array
     {
         $headers = [];

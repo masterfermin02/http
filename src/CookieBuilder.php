@@ -9,27 +9,27 @@ class CookieBuilder
     private bool $defaultSecure = true;
     private bool $defaultHttpOnly = true;
 
-    public function setDefaultDomain($domain): void
+    public function setDefaultDomain(string $domain): void
     {
-        $this->defaultDomain = (string) $domain;
+        $this->defaultDomain = $domain;
     }
 
-    public function setDefaultPath($path): void
+    public function setDefaultPath(string $path): void
     {
-        $this->defaultPath = (string) $path;
+        $this->defaultPath = $path;
     }
 
-    public function setDefaultSecure($secure): void
+    public function setDefaultSecure(bool $secure): void
     {
-        $this->defaultSecure = (bool) $secure;
+        $this->defaultSecure = $secure;
     }
 
-    public function setDefaultHttpOnly($httpOnly): void
+    public function setDefaultHttpOnly(bool $httpOnly): void
     {
-        $this->defaultHttpOnly = (bool) $httpOnly;
+        $this->defaultHttpOnly = $httpOnly;
     }
 
-    public function build($name, $value): \Http\HttpCookie
+    public function build(string $name, string $value): \Http\HttpCookie
     {
         $cookie = new HttpCookie($name, $value);
         $cookie->setPath($this->defaultPath);

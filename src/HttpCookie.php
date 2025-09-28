@@ -4,18 +4,14 @@ namespace Http;
 
 class HttpCookie implements Cookie
 {
-    private readonly string $name;
-    private string $value;
     private ?string $domain = null;
     private ?string $path = null;
     private ?int $maxAge = null;
     private ?bool $secure = null;
     private ?bool $httpOnly = null;
 
-    public function __construct($name, $value)
+    public function __construct(private readonly string $name, private string $value)
     {
-        $this->name = (string) $name;
-        $this->value = (string) $value;
     }
 
     /**
